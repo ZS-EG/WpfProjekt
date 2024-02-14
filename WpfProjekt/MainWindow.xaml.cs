@@ -48,7 +48,6 @@ namespace WpfProjekt
             imgAuto.Source = Images[Losowana];
             wynik.Text = punktyGracz + " : " + punktyAuto;
             czyWygrana();
-            //SystemSounds.Hand.Play();
         }
 
         private void losowanie()
@@ -57,14 +56,15 @@ namespace WpfProjekt
             int losowana = random.Next(0, 3);
             Losowana = losowana;
         }
+
         private void sprawdzWynik()
         {
             if (Losowana == Nr)
             {
-                historia.Text = "Remis.";
+                historia.Text = "Remis!";
             }
 
-            //kamien < papier < nozyczki < kamien
+
             if (Losowana == 0 && Nr == 1)
             {
                 punktyGracz++;
@@ -80,24 +80,24 @@ namespace WpfProjekt
             if (Losowana == 0 && Nr == 2)
             {
                 punktyAuto++;
-                historia.Text = "Wygrywa Auto, Kamien wygrywa z nozyczkami.";
+                historia.Text = "Wygrywa Auto, Kamień wygrywa z nożyczkami.";
             }
             else if (Losowana == 2 && Nr == 0)
             {
                 punktyGracz++;
-                historia.Text = "Wygrywa Gracz, Kamien wygrywa z nozyczkami.";
+                historia.Text = "Wygrywa Gracz, Kamień wygrywa z nożyczkami.";
             }
 
 
             if (Losowana == 1 && Nr == 2)
             {
                 punktyGracz++;
-                historia.Text = "Wygrywa Gracz, Nozyczki wygrywa z papierem.";
+                historia.Text = "Wygrywa Gracz, Nożyczki wygrywa z papierem.";
             }
             else if (Losowana == 2 && Nr == 1)
             {
                 punktyAuto++;
-                historia.Text = "Wygrywa Auto, Nozyczki wygrywa z papierem.";
+                historia.Text = "Wygrywa Auto, Nożyczki wygrywa z papierem.";
             }
         }
 
@@ -116,43 +116,43 @@ namespace WpfProjekt
                 Losowana = 0;
             }
         }
+
         private void sprawdzWynikImpossible()
         {
             //0-kam 1-pap 2-noz
             if (Nr == 0)
             {
-                historia.Text = "Wygrywa Auto, Papier wygrywa z nozyczkami.";
+                historia.Text = "Wygrywa Auto, Papier wygrywa z nożyczkami.";
                 punktyAuto++;
             }
             else if (Nr == 1)
             {
-                historia.Text = "Wygrywa Auto, NOzyczki wygrywa z papierem.";
+                historia.Text = "Wygrywa Auto, Nożyczki wygrywa z papierem.";
                 punktyAuto++;
             }
             else
             {
-                historia.Text = "Wygrywa Auto, Kmaien wygrywa z nozyczkami.";
+                historia.Text = "Wygrywa Auto, Kmaie wygrywa z nożyczkami.";
                 punktyAuto++;
             }
         }
+
         private void czyWygrana()
         {
-            //jesli punkty == 3 to koniec, wylacz przycisz
             if(punktyAuto == 3)
             {
-                granie.IsEnabled = false;
                 wygrana.Text = "Koniec gry! Wygrywa Auto";
+                granie.IsEnabled = false;
             }
             else if(punktyGracz == 3)
             {
-                granie.IsEnabled = false;
                 wygrana.Text = "Koniec gry! Wygrywa Gracz";
+                granie.IsEnabled = false;
             }
         }
 
         private void Button_K(object sender, RoutedEventArgs e)
         {
-            //Kamien
             Nr = 0;
             imgGracz.Source = Images[Nr];
             SystemSounds.Asterisk.Play();
@@ -160,7 +160,6 @@ namespace WpfProjekt
 
         private void Button_P(object sender, RoutedEventArgs e)
         {
-            //Papier
             Nr = 1;
             imgGracz.Source = Images[Nr];
             SystemSounds.Beep.Play();
@@ -168,11 +167,11 @@ namespace WpfProjekt
 
         private void Button_N(object sender, RoutedEventArgs e)
         {
-            //Nozyce
             Nr = 2;
             imgGracz.Source = Images[Nr];
             SystemSounds.Exclamation.Play();
         }
+
         private void przygotujGre()
         {
             Images = new List<BitmapImage>();
@@ -181,9 +180,9 @@ namespace WpfProjekt
             Images.Add(new BitmapImage(new Uri("img/nozyczki.jpg", UriKind.Relative)));
         }
 
-
         private void MenuItem_Close(object sender, RoutedEventArgs e)
         {
+            //zapytanie czy ay na pewno
             Close();
         }
 
@@ -195,46 +194,6 @@ namespace WpfProjekt
             granie.IsEnabled = true;
             wygrana.Text = "";
             historia.Text = "";
-            //czas_txt.Text = "0 : 5";
         }
-
-        
-        private void MenuItem_Czas(object sender, RoutedEventArgs e)
-        {
-
-            if (czas1.IsChecked)
-            {
-                for (int i=1; i<=5; i++)
-                {
-                    odliczanie--;
-                    czas_txt.Text = "0 : " + odliczanie;
-                    //nie pokazuje do konca, jak chce ^ do naprawy
-                }
-            }
-        }
-
-        private void MenuItem_Impo(object sender, RoutedEventArgs e)
-        {
-            //nie da sie wygrac -> 0>1, 1>2, 2<0
-            if (impo.IsChecked)
-            {
-                if(Nr == 0)
-                {
-                    Losowana = 1;
-                    imgAuto.Source = Images[Losowana];
-                }
-                else if(Nr == 1)
-                {
-                    Losowana = 2;
-                    imgAuto.Source = Images[Losowana];
-                }
-                else
-                {
-                    Losowana = 0;
-                    imgAuto.Source = Images[Losowana];
-                }
-            }
-        }
-
     }
 }
