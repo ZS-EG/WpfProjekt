@@ -9,16 +9,12 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Opcje">
-                <MenuItem Header="Poziom trudności">
-                    <MenuItem Header="Łatwy" Click="MenuItem_Click"/>
-                    <MenuItem Header="Trudny" Click="MenuItem_Click_1"/>
-                    <MenuItem Header="Niemożliwy" Click="MenuItem_Click_2"/>
-                </MenuItem>
-                <MenuItem Header="Resetuj wynik" Click="MenuItem_ResetWynik"/>
+                <MenuItem x:Name="czas1" Header="Gra na czas" Click="MenuItem_Czas" IsCheckable="True"/>
+                <MenuItem Header="Missiomn: Impossible"/>
+                <MenuItem Header="Resetuj grę" Click="MenuItem_ResetWynik"/>
             </MenuItem>
             <MenuItem Header="Wygląd">
                 <MenuItem Header="Zmień motyw"/>
-                <MenuItem Header="Zmień grafikę"/>
             </MenuItem>
             <MenuItem Header="Wyjdź" Click="MenuItem_Close"/>
         </Menu>
@@ -51,11 +47,13 @@
             </WrapPanel>
             <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
                 <TextBlock FontSize="24" FontWeight="Bold" x:Name="wynik" Text="0 : 0" Width="300" TextAlignment="Center"/>
-                <Button Click="Button_Wyslij" Width="300" Content="Graj"/>
+                <Button Click="Button_Wyslij" Width="300" Content="Graj" x:Name="granie"/>
+                <TextBlock x:Name="wygrana" Foreground="Red" TextAlignment="Center" FontSize="20"/>
             </StackPanel>
-            <DockPanel Grid.Row="1" Grid.Column="1">
+            <StackPanel Grid.Row="1" Grid.Column="1">
                 <TextBlock x:Name="historia" FontSize="18" TextAlignment="Center" FontWeight="Bold"/>
-            </DockPanel>
+                <TextBlock x:Name="czas_txt" FontSize="20" TextAlignment="Center" Text="0 : 5" />
+            </StackPanel>
         </Grid>
     </DockPanel>
 </Window>
