@@ -10,8 +10,11 @@
 
   <ItemGroup>
     <None Remove="img\kamien.jpg" />
+    <None Remove="img\kamien.png" />
     <None Remove="img\nozyczki.jpg" />
+    <None Remove="img\nozyczki.png" />
     <None Remove="img\papier.jpg" />
+    <None Remove="img\papier.png" />
   </ItemGroup>
 
   <ItemGroup>
