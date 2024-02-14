@@ -1,4 +1,5 @@
 ﻿using System.Media;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Security.Cryptography.Pkcs;
 using System.Text;
@@ -25,6 +26,7 @@ namespace WpfProjekt
         public int Nr { get; set; }
         public int Losowana { get; set; }
         public List<BitmapImage> Images { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -152,23 +154,24 @@ namespace WpfProjekt
         }
 
         
-        private void MenuItem_Czas(object sender, RoutedEventArgs e)
+        private async void MenuItem_Czas(object sender, RoutedEventArgs e)
         {
+
             if (czas1.IsChecked)
             {
-                while(odliczanie != 0)
+                for (int i=1; i<=5; i++)
                 {
-                    odliczanie = odliczanie - 1;
-                    //czas_txt.Text = "0 : " + odliczanie.ToString();
-                    //czas_txt.Text = DateTime.MaxValue 
+                    odliczanie--;
+                    czas_txt.Text = "0 : " + odliczanie;
+                    //nie pokazuje do konca, jak chce ^ do naprawy
                 }
             }
         }
+
+        private void MenuItem_Impo(object sender, RoutedEventArgs e)
+        {
+            //nie da sie wygrac -> 0>1, 1>2, 2<0
+        }
+
     }
 }
-
-/*
-0 - kamien
-1 - papier
-2 - nozyczki
- */
