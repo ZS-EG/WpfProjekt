@@ -1,4 +1,5 @@
 ﻿using System.Media;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Security.Cryptography.Pkcs;
 using System.Text;
@@ -25,6 +26,7 @@ namespace WpfProjekt
         public int Nr { get; set; }
         public int Losowana { get; set; }
         public List<BitmapImage> Images { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,17 +35,28 @@ namespace WpfProjekt
 
         private void Button_Wyslij(object sender, RoutedEventArgs e)
         {
-            Random random = new Random();
-            int losowana = random.Next(0, 3);
-            Losowana = losowana;
+            if (!impo.IsChecked)
+            {
+                losowanie();
+                sprawdzWynik();
+            }
+            else
+            {
+                missionImpossible();
+                sprawdzWynikImpossible();
+            }
             imgAuto.Source = Images[Losowana];
-            //MessageBox.Show(losowana.ToString());
-            sprawdzWynik();
             wynik.Text = punktyGracz + " : " + punktyAuto;
             czyWygrana();
             //SystemSounds.Hand.Play();
         }
 
+        private void losowanie()
+        {
+            Random random = new Random();
+            int losowana = random.Next(0, 3);
+            Losowana = losowana;
+        }
         private void sprawdzWynik()
         {
             if (Losowana == Nr)
@@ -88,6 +101,40 @@ namespace WpfProjekt
             }
         }
 
+        private void missionImpossible()
+        {
+            if (Nr == 0)
+            {
+                Losowana = 1;
+            }
+            else if (Nr == 1)
+            {
+                Losowana = 2;
+            }
+            else
+            {
+                Losowana = 0;
+            }
+        }
+        private void sprawdzWynikImpossible()
+        {
+            //0-kam 1-pap 2-noz
+            if (Nr == 0)
+            {
+                historia.Text = "Wygrywa Auto, Papier wygrywa z nozyczkami.";
+                punktyAuto++;
+            }
+            else if (Nr == 1)
+            {
+                historia.Text = "Wygrywa Auto, NOzyczki wygrywa z papierem.";
+                punktyAuto++;
+            }
+            else
+            {
+                historia.Text = "Wygrywa Auto, Kmaien wygrywa z nozyczkami.";
+                punktyAuto++;
+            }
+        }
         private void czyWygrana()
         {
             //jesli punkty == 3 to koniec, wylacz przycisz
@@ -148,27 +195,46 @@ namespace WpfProjekt
             granie.IsEnabled = true;
             wygrana.Text = "";
             historia.Text = "";
-            czas_txt.Text = "0 : 5";
+            //czas_txt.Text = "0 : 5";
         }
 
         
         private void MenuItem_Czas(object sender, RoutedEventArgs e)
         {
+
             if (czas1.IsChecked)
             {
-                while(odliczanie != 0)
+                for (int i=1; i<=5; i++)
                 {
-                    odliczanie = odliczanie - 1;
-                    //czas_txt.Text = "0 : " + odliczanie.ToString();
-                    //czas_txt.Text = DateTime.MaxValue 
+                    odliczanie--;
+                    czas_txt.Text = "0 : " + odliczanie;
+                    //nie pokazuje do konca, jak chce ^ do naprawy
                 }
             }
         }
+
+        private void MenuItem_Impo(object sender, RoutedEventArgs e)
+        {
+            //nie da sie wygrac -> 0>1, 1>2, 2<0
+            if (impo.IsChecked)
+            {
+                if(Nr == 0)
+                {
+                    Losowana = 1;
+                    imgAuto.Source = Images[Losowana];
+                }
+                else if(Nr == 1)
+                {
+                    Losowana = 2;
+                    imgAuto.Source = Images[Losowana];
+                }
+                else
+                {
+                    Losowana = 0;
+                    imgAuto.Source = Images[Losowana];
+                }
+            }
+        }
+
     }
 }
-
-/*
-0 - kamien
-1 - papier
-2 - nozyczki
- */

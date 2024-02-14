@@ -6,15 +6,13 @@
         xmlns:local="clr-namespace:WpfProjekt"
         mc:Ignorable="d"
         Title="Projekt" Height="450" Width="800">
-    <DockPanel>
+    <DockPanel x:Name="calyWidok">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Opcje">
                 <MenuItem x:Name="czas1" Header="Gra na czas" Click="MenuItem_Czas" IsCheckable="True"/>
-                <MenuItem Header="Missiomn: Impossible"/>
+                <MenuItem Header="Mission: Impossible" IsCheckable="True" Click="MenuItem_Impo" x:Name="impo"/>
                 <MenuItem Header="Resetuj grę" Click="MenuItem_ResetWynik"/>
-            </MenuItem>
-            <MenuItem Header="Wygląd">
-                <MenuItem Header="Zmień motyw"/>
+                <MenuItem Header="Gra na Punkty"/>
             </MenuItem>
             <MenuItem Header="Wyjdź" Click="MenuItem_Close"/>
         </Menu>
@@ -29,10 +27,10 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Column="2">
-                <Image x:Name="imgAuto" Margin="10" Source="img/kamien.jpg"/>
+                <Image x:Name="imgAuto" Margin="10" Source="img/tlo.jfif"/>
             </DockPanel>
             <DockPanel>
-                <Image x:Name="imgGracz" Margin="10" Source="img/kamien.jpg"/>
+                <Image x:Name="imgGracz" Margin="10" Source="img/tlo.jfif"/>
             </DockPanel>
             <WrapPanel Grid.Row="1">
                 <Button Click="Button_K" Width="100" Height="60" Margin="12">
@@ -52,7 +50,8 @@
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1">
                 <TextBlock x:Name="historia" FontSize="18" TextAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Name="czas_txt" FontSize="20" TextAlignment="Center" Text="0 : 5" />
+                <TickBar></TickBar>
+                <TextBlock x:Name="czas_txt" FontSize="20" TextAlignment="Center" Text="0 : 5"/>
             </StackPanel>
         </Grid>
     </DockPanel>
