@@ -57,9 +57,17 @@ namespace WpfProjekt
         private void Button_Wyslij(object sender, RoutedEventArgs e)
         {
             wysylanie();
-            //dodanie resetu czasu bez przyspieszenia ^ wyslij lub na dole
+            if (czasID.IsChecked)
+            { 
+                wyslanieCzas();
+            }
         }
 
+        private void wyslanieCzas()
+        {
+            _timer.Stop();
+            czasomierz();
+        }
         private void losowanie()
         {
             Random random = new Random();
@@ -129,7 +137,6 @@ namespace WpfProjekt
 
         private void sprawdzWynikImpossible()
         {
-            //0-kam 1-pap 2-noz
             if (Nr == 0)
             {
                 historia.Text = "Wygrywa Auto, Papier wygrywa z nożyczkami.";
@@ -153,11 +160,15 @@ namespace WpfProjekt
             {
                 wygrana.Text = "Koniec gry! Wygrywa Auto";
                 granie.IsEnabled = false;
+                dalej.IsEnabled = false;
+                tbTime.Visibility = Visibility.Hidden;
             }
             else if(punktyGracz == 3)
             {
                 wygrana.Text = "Koniec gry! Wygrywa Gracz";
                 granie.IsEnabled = false;
+                dalej.IsEnabled = false;
+                tbTime.Visibility = Visibility.Hidden;
             }
         }
 
@@ -207,6 +218,8 @@ namespace WpfProjekt
             tbTime.Visibility = Visibility.Hidden;
             czasID.IsChecked = false;
             dalej.Visibility = Visibility.Hidden;
+            dalej.IsEnabled = true;
+            impo.IsChecked = false;
         }
 
         private void czasomierz()
@@ -219,8 +232,10 @@ namespace WpfProjekt
                 if (_time == TimeSpan.Zero)
                 {
                     _timer.Stop();
+                    losowanie();
                     granie.IsEnabled = false;
                     dalej.Visibility = Visibility.Visible;
+                    punktyAuto++;
                 }
                 _time = _time.Add(TimeSpan.FromSeconds(-1));
             }, Application.Current.Dispatcher);
@@ -232,6 +247,7 @@ namespace WpfProjekt
             if (czasID.IsChecked)
             {
                 czasomierz();
+                tbTime.Visibility = Visibility.Visible;
             }
             else
             {
