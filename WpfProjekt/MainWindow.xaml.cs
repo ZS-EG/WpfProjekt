@@ -57,6 +57,7 @@ namespace WpfProjekt
         private void Button_Wyslij(object sender, RoutedEventArgs e)
         {
             wysylanie();
+            //dodanie resetu czasu bez przyspieszenia ^
         }
 
         private void losowanie()
