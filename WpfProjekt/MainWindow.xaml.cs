@@ -290,12 +290,14 @@ namespace WpfProjekt
             {
                 widocznosc.Visibility = Visibility.Hidden;
                 stop.Header = "Stop";
+                _timer.Start();
                 klik--;
             }
             else
             {
                 widocznosc.Visibility = Visibility.Visible;
                 stop.Header = "Znów";
+                _timer.Stop();
                 klik++;
             }
         }
