@@ -1,4 +1,6 @@
-﻿using System.Media;
+﻿using Microsoft.Win32;
+using System.IO;
+using System.Media;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Security.Cryptography.Pkcs;
@@ -23,7 +25,8 @@ namespace WpfProjekt
     {
         public int punktyGracz = 0;
         public int punktyAuto = 0;
-        public int odliczanie = 5;
+        public int odliczanie = 5; 
+        public int klik = 0;
         public int Nr { get; set; }
         public int Losowana { get; set; }
         public List<BitmapImage> Images { get; set; }
@@ -58,7 +61,7 @@ namespace WpfProjekt
         {
             wysylanie();
             if (czasID.IsChecked)
-            { 
+            {
                 wyslanieCzas();
             }
         }
@@ -156,7 +159,7 @@ namespace WpfProjekt
 
         private void czyWygrana()
         {
-            if(punktyAuto == 3)
+            if (punktyAuto == 3)
             {
                 wygrana.Text = "Koniec gry! Wygrywa Auto";
                 granie.IsEnabled = false;
@@ -164,7 +167,7 @@ namespace WpfProjekt
                 dalej.Visibility = Visibility.Hidden;
                 tbTime.Visibility = Visibility.Hidden;
             }
-            else if(punktyGracz == 3)
+            else if (punktyGracz == 3)
             {
                 wygrana.Text = "Koniec gry! Wygrywa Gracz";
                 granie.IsEnabled = false;
@@ -203,7 +206,7 @@ namespace WpfProjekt
         private void MenuItem_Close(object sender, RoutedEventArgs e)
         {
             var Wychodzenie = MessageBox.Show("Czy na pewno chcesz wyjść?", "Pytanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if(Wychodzenie == MessageBoxResult.Yes)
+            if (Wychodzenie == MessageBoxResult.Yes)
             {
                 Close();
             }
@@ -226,7 +229,7 @@ namespace WpfProjekt
 
         private void czasomierz()
         {
-            _time = TimeSpan.FromSeconds(1);
+            _time = TimeSpan.FromSeconds(3);
 
             _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
             {
@@ -280,5 +283,33 @@ namespace WpfProjekt
         {
             calyWidok.Background = Brushes.LightSkyBlue;
         }
-    }
+
+        private void MenuItem_Stop(object sender, RoutedEventArgs e)
+        {
+            if (klik == 1)
+            {
+                widocznosc.Visibility = Visibility.Hidden;
+                stop.Header = "Stop";
+                klik--;
+            }
+            else
+            {
+                widocznosc.Visibility = Visibility.Visible;
+                stop.Header = "Znów";
+                klik++;
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            //zapis wyniku do pliku txt
+                var oknoDialogowe = new SaveFileDialog();
+                oknoDialogowe.Filter = "PlainText| *.txt";
+                if (oknoDialogowe.ShowDialog() == true)
+                {
+                    string nazwaPliku = oknoDialogowe.FileName;
+                    File.WriteAllText(nazwaPliku, wynik.Text);
+                }
+            }
+        }
 }

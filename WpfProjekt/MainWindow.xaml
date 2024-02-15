@@ -20,6 +20,8 @@
                     <RadioButton GroupName="wybierzK" x:Name="tres" Click="tres_Click" Content="Niebieski"/>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="Zapisz Wynik" Click="MenuItem_Click"/>
+            <MenuItem Header="Stop" Click="MenuItem_Stop" x:Name="stop"/>
             <MenuItem Header="Wyjdź" Click="MenuItem_Close"/>
         </Menu>
         <Grid>
@@ -59,6 +61,9 @@
                 <TextBlock TextAlignment="Center" FontSize="20" x:Name="tbTime"/>
                 <Button x:Name="dalej" Content="Dalej" Click="dalej_Click" Visibility="Hidden" Width="100"/>
             </StackPanel>
+            <UniformGrid Grid.RowSpan="3" Grid.ColumnSpan="2">
+                <Rectangle Fill="AliceBlue" Width="800" Height="450" Opacity="0.5" Visibility="Hidden" x:Name="widocznosc"/>
+            </UniformGrid>
         </Grid>
     </DockPanel>
 </Window>
