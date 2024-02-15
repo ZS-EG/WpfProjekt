@@ -13,6 +13,13 @@
                 <MenuItem Header="Resetuj grę" Click="MenuItem_ResetWynik"/>
                 <MenuItem Header="Gra na czas" Click="MenuItem_Czas" x:Name="czasID" IsCheckable="True"/>
             </MenuItem>
+            <MenuItem Header="Wygląd">
+                <MenuItem Header="Wybierz kolor">
+                    <RadioButton GroupName="wybierzK" x:Name="uno" Click="uno_Click" Content="Zielony"/>
+                    <RadioButton GroupName="wybierzK" x:Name="dos" Click="dos_Click" Content="Fioletowy"/>
+                    <RadioButton GroupName="wybierzK" x:Name="tres" Click="tres_Click" Content="Niebieski"/>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="Wyjdź" Click="MenuItem_Close"/>
         </Menu>
         <Grid>

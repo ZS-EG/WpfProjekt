@@ -161,6 +161,7 @@ namespace WpfProjekt
                 wygrana.Text = "Koniec gry! Wygrywa Auto";
                 granie.IsEnabled = false;
                 dalej.IsEnabled = false;
+                dalej.Visibility = Visibility.Hidden;
                 tbTime.Visibility = Visibility.Hidden;
             }
             else if(punktyGracz == 3)
@@ -168,6 +169,7 @@ namespace WpfProjekt
                 wygrana.Text = "Koniec gry! Wygrywa Gracz";
                 granie.IsEnabled = false;
                 dalej.IsEnabled = false;
+                dalej.Visibility = Visibility.Hidden;
                 tbTime.Visibility = Visibility.Hidden;
             }
         }
@@ -224,7 +226,7 @@ namespace WpfProjekt
 
         private void czasomierz()
         {
-            _time = TimeSpan.FromSeconds(5);
+            _time = TimeSpan.FromSeconds(1);
 
             _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
             {
@@ -235,7 +237,6 @@ namespace WpfProjekt
                     losowanie();
                     granie.IsEnabled = false;
                     dalej.Visibility = Visibility.Visible;
-                    punktyAuto++;
                 }
                 _time = _time.Add(TimeSpan.FromSeconds(-1));
             }, Application.Current.Dispatcher);
@@ -263,6 +264,21 @@ namespace WpfProjekt
             dalej.Visibility = Visibility.Hidden;
             granie.IsEnabled = true;
             czasomierz();
+        }
+
+        private void uno_Click(object sender, RoutedEventArgs e)
+        {
+            calyWidok.Background = Brushes.LightSeaGreen;
+        }
+
+        private void dos_Click(object sender, RoutedEventArgs e)
+        {
+            calyWidok.Background = Brushes.Thistle;
+        }
+
+        private void tres_Click(object sender, RoutedEventArgs e)
+        {
+            calyWidok.Background = Brushes.LightSkyBlue;
         }
     }
 }
