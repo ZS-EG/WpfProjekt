@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace WpfProjekt
 {
@@ -27,13 +28,16 @@ namespace WpfProjekt
         public int Losowana { get; set; }
         public List<BitmapImage> Images { get; set; }
 
+        DispatcherTimer _timer;
+        TimeSpan _time;
+
         public MainWindow()
         {
             InitializeComponent();
             przygotujGre();
         }
 
-        private void Button_Wyslij(object sender, RoutedEventArgs e)
+        private void wysylanie()
         {
             if (!impo.IsChecked)
             {
@@ -48,6 +52,11 @@ namespace WpfProjekt
             imgAuto.Source = Images[Losowana];
             wynik.Text = punktyGracz + " : " + punktyAuto;
             czyWygrana();
+        }
+
+        private void Button_Wyslij(object sender, RoutedEventArgs e)
+        {
+            wysylanie();
         }
 
         private void losowanie()
@@ -155,21 +164,18 @@ namespace WpfProjekt
         {
             Nr = 0;
             imgGracz.Source = Images[Nr];
-            SystemSounds.Asterisk.Play();
         }
 
         private void Button_P(object sender, RoutedEventArgs e)
         {
             Nr = 1;
             imgGracz.Source = Images[Nr];
-            SystemSounds.Beep.Play();
         }
 
         private void Button_N(object sender, RoutedEventArgs e)
         {
             Nr = 2;
             imgGracz.Source = Images[Nr];
-            SystemSounds.Exclamation.Play();
         }
 
         private void przygotujGre()
@@ -182,8 +188,11 @@ namespace WpfProjekt
 
         private void MenuItem_Close(object sender, RoutedEventArgs e)
         {
-            //zapytanie czy ay na pewno
-            Close();
+            var Wychodzenie = MessageBox.Show("Czy na pewno chcesz wyjść?", "Pytanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if(Wychodzenie == MessageBoxResult.Yes)
+            {
+                Close();
+            }
         }
 
         private void MenuItem_ResetWynik(object sender, RoutedEventArgs e)
@@ -194,6 +203,49 @@ namespace WpfProjekt
             granie.IsEnabled = true;
             wygrana.Text = "";
             historia.Text = "";
+            tbTime.Visibility = Visibility.Hidden;
+            czasID.IsChecked = false;
+            dalej.Visibility = Visibility.Hidden;
+        }
+
+        private void czasomierz()
+        {
+            _time = TimeSpan.FromSeconds(5);
+
+            _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+            {
+                tbTime.Text = _time.ToString("mm':'ss");
+                if (_time == TimeSpan.Zero)
+                {
+                    _timer.Stop();
+                    granie.IsEnabled = false;
+                    dalej.Visibility = Visibility.Visible;
+                }
+                _time = _time.Add(TimeSpan.FromSeconds(-1));
+            }, Application.Current.Dispatcher);
+            _timer.Start();
+        }
+
+        private void MenuItem_Czas(object sender, RoutedEventArgs e)
+        {
+            if (czasID.IsChecked)
+            {
+                czasomierz();
+            }
+            else
+            {
+                _timer.Stop();
+                tbTime.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void dalej_Click(object sender, RoutedEventArgs e)
+        {
+            wysylanie();
+            _timer.Stop();
+            dalej.Visibility = Visibility.Hidden;
+            granie.IsEnabled = true;
+            czasomierz();
         }
     }
 }

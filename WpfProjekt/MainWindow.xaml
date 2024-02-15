@@ -8,10 +8,10 @@
         Title="Projekt - papier, kamień, nożyce" Height="450" Width="800">
     <DockPanel x:Name="calyWidok">
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Opcje">
+            <MenuItem Header="Ustawienia gry">
                 <MenuItem Header="Mission: Impossible" IsCheckable="True" x:Name="impo"/>
                 <MenuItem Header="Resetuj grę" Click="MenuItem_ResetWynik"/>
-                <MenuItem Header="Gra ndo 3 Punktów"/>
+                <MenuItem Header="Gra na czas" Click="MenuItem_Czas" x:Name="czasID" IsCheckable="True"/>
             </MenuItem>
             <MenuItem Header="Wyjdź" Click="MenuItem_Close"/>
         </Menu>
@@ -26,19 +26,19 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Column="2">
-                <Image x:Name="imgAuto" Margin="10" Source="img/kamien.jpg"/>
+                <Image x:Name="imgAuto" Margin="20" Source="img/kamien.jpg"/>
             </DockPanel>
             <DockPanel>
-                <Image x:Name="imgGracz" Margin="10" Source="img/kamien.jpg"/>
+                <Image x:Name="imgGracz" Margin="20" Source="img/kamien.jpg"/>
             </DockPanel>
             <WrapPanel Grid.Row="1">
-                <Button Click="Button_K" Width="100" Height="60" Margin="10">
+                <Button Click="Button_K" Width="110" Height="60" Margin="10">
                     <Image Source="img/kamien.jpg"/>
                 </Button>
-                <Button Click="Button_P" Width="100" Height="60" Margin="10">
+                <Button Click="Button_P" Width="110" Height="60" Margin="10">
                     <Image Source="img/papier.jpg"/>
                 </Button>
-                <Button Click="Button_N" Width="100" Height="60" Margin="10">
+                <Button Click="Button_N" Width="110" Height="60" Margin="10">
                     <Image Source="img/nozyczki.jpg"/>
                 </Button>
             </WrapPanel>
@@ -48,8 +48,9 @@
                 <TextBlock x:Name="wygrana" Foreground="Red" TextAlignment="Center" FontSize="20"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1">
-                <TextBlock x:Name="historia" FontSize="18" TextAlignment="Center" FontWeight="Bold"/>
-                
+                <TextBlock x:Name="historia" FontSize="18" TextAlignment="Center"/>
+                <TextBlock TextAlignment="Center" FontSize="20" x:Name="tbTime"/>
+                <Button x:Name="dalej" Content="Dalej" Click="dalej_Click" Visibility="Hidden" Width="100"/>
             </StackPanel>
         </Grid>
     </DockPanel>
