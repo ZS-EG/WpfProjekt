@@ -307,14 +307,20 @@ namespace WpfProjekt
             {
                 widocznosc.Visibility = Visibility.Hidden;
                 stop.Header = "Stop";
-                _timer.Start();
                 klik--;
+                if (czasID.IsChecked)
+                {
+                    _timer.Start();
+                }
             }
             else
             {
                 widocznosc.Visibility = Visibility.Visible;
                 stop.Header = "Znów";
-                _timer.Stop();
+                if (czasID.IsChecked)
+                {
+                    _timer.Stop();
+                }
                 klik++;
             }
         }
@@ -330,7 +336,6 @@ namespace WpfProjekt
                 string nazwaPliku = oknoDialogowe.FileName;
                 File.WriteAllText(nazwaPliku, wynik.Text);
             }
-
         }
     }
 }
