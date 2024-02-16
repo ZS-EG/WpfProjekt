@@ -25,14 +25,14 @@ namespace WpfProjekt
     {
         public int punktyGracz = 0;
         public int punktyAuto = 0;
-        public int odliczanie = 5; 
+        public int odliczanie = 5;
         public int klik = 0;
         public int Nr { get; set; }
         public int Losowana { get; set; }
         public List<BitmapImage> Images { get; set; }
 
-        DispatcherTimer _timer;
-        TimeSpan _time;
+        DispatcherTimer _timer; //licznik czasu
+        TimeSpan _time; //czas/przedzial czasu
 
         public MainWindow()
         {
@@ -73,6 +73,7 @@ namespace WpfProjekt
         }
         private void losowanie()
         {
+            //losuje Auto
             Random random = new Random();
             int losowana = random.Next(0, 3);
             Losowana = losowana;
@@ -124,6 +125,7 @@ namespace WpfProjekt
 
         private void missionImpossible()
         {
+            //wybieranie auto do granie (losowanie^)
             if (Nr == 0)
             {
                 Losowana = 1;
@@ -140,6 +142,7 @@ namespace WpfProjekt
 
         private void sprawdzWynikImpossible()
         {
+            //czy wygrana - impossible
             if (Nr == 0)
             {
                 historia.Text = "Wygrywa Auto, Papier wygrywa z nożyczkami.";
@@ -159,6 +162,7 @@ namespace WpfProjekt
 
         private void czyWygrana()
         {
+            //sprawdza czy wygrana
             if (punktyAuto == 3)
             {
                 wygrana.Text = "Koniec gry! Wygrywa Auto";
@@ -214,23 +218,34 @@ namespace WpfProjekt
 
         private void MenuItem_ResetWynik(object sender, RoutedEventArgs e)
         {
+            //przywraca do oryginalnego wygladu
             punktyAuto = 0;
             punktyGracz = 0;
             wynik.Text = punktyGracz + " : " + punktyAuto;
-            granie.IsEnabled = true;
             wygrana.Text = "";
             historia.Text = "";
             tbTime.Visibility = Visibility.Hidden;
-            czasID.IsChecked = false;
             dalej.Visibility = Visibility.Hidden;
+            if (czasID.IsChecked)
+            {
+                _timer.Stop();
+            }
+            granie.IsEnabled = true;
             dalej.IsEnabled = true;
+            czasID.IsChecked = false;
             impo.IsChecked = false;
+            //KOLOR TLA
+            calyWidok.Background = Brushes.White;
         }
 
         private void czasomierz()
         {
+            //odlicza 3 sekundy
             _time = TimeSpan.FromSeconds(3);
 
+            //delegate - obiektowy typ, hermetyzuje metode, wywodzone ze wskaznikow
+            //dispatcher - z tickami wspolpracuje,
+            //timespan musi zawierac 3 argumenty (0, 0, 1) - h:m:s
             _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
             {
                 tbTime.Text = _time.ToString("mm':'ss");
@@ -262,6 +277,7 @@ namespace WpfProjekt
 
         private void dalej_Click(object sender, RoutedEventArgs e)
         {
+            //po ukonczeniu czasu
             wysylanie();
             _timer.Stop();
             dalej.Visibility = Visibility.Hidden;
@@ -286,6 +302,7 @@ namespace WpfProjekt
 
         private void MenuItem_Stop(object sender, RoutedEventArgs e)
         {
+            //przycisk pausy/wznowienia
             if (klik == 1)
             {
                 widocznosc.Visibility = Visibility.Hidden;
@@ -305,13 +322,15 @@ namespace WpfProjekt
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             //zapis wyniku do pliku txt
-                var oknoDialogowe = new SaveFileDialog();
-                oknoDialogowe.Filter = "PlainText| *.txt";
-                if (oknoDialogowe.ShowDialog() == true)
-                {
-                    string nazwaPliku = oknoDialogowe.FileName;
-                    File.WriteAllText(nazwaPliku, wynik.Text);
-                }
+            var oknoDialogowe = new SaveFileDialog();
+            oknoDialogowe.Filter = "PlainText| *.txt";
+            oknoDialogowe.Title = "Zapisane wyniki";
+            if (oknoDialogowe.ShowDialog() == true)
+            {
+                string nazwaPliku = oknoDialogowe.FileName;
+                File.WriteAllText(nazwaPliku, wynik.Text);
             }
+
         }
+    }
 }
