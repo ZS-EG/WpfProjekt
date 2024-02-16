@@ -64,6 +64,9 @@
             <UniformGrid Grid.RowSpan="3" Grid.ColumnSpan="2">
                 <Rectangle Fill="AliceBlue" Width="800" Height="450" Opacity="0.5" Visibility="Hidden" x:Name="widocznosc"/>
             </UniformGrid>
+            <UniformGrid Grid.Row="1" Grid.Column="1">
+                <Rectangle Fill="White" x:Name="zakrywa" Visibility="Hidden" Margin="0,50,0,0"/>
+            </UniformGrid>
         </Grid>
     </DockPanel>
 </Window>

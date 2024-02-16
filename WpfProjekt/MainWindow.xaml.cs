@@ -184,6 +184,7 @@ namespace WpfProjekt
                 if (czasID.IsChecked)
                 {
                     _timer.Stop();
+                    zakrywa.Visibility = Visibility.Visible;
                 }
             }
             else if (punktyGracz == 3)
@@ -196,6 +197,7 @@ namespace WpfProjekt
                 if (czasID.IsChecked)
                 {
                     _timer.Stop();
+                    zakrywa.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -245,6 +247,7 @@ namespace WpfProjekt
             historia.Text = "";
             tbTime.Visibility = Visibility.Hidden;
             dalej.Visibility = Visibility.Hidden;
+            zakrywa.Visibility = Visibility.Hidden;
             if (czasID.IsChecked)
             {
                 _timer.Stop();
