@@ -34,18 +34,29 @@ namespace WpfProjekt
         DispatcherTimer _timer; //licznik czasu
         TimeSpan _time; //czas/przedzial czasu
 
+        //todo - punkty po czasie
         public MainWindow()
         {
             InitializeComponent();
             przygotujGre();
         }
 
+
         private void wysylanie()
         {
             if (!impo.IsChecked)
             {
                 losowanie();
-                sprawdzWynik();
+                if(granie.IsEnabled == false)
+                {
+                    //po czasie -> dla auto
+                    punktyAuto++;
+                    historia.Text = "Wygrywa Auto, koniec czasu!";
+                }
+                else
+                {
+                    sprawdzWynik();
+                }
             }
             else
             {
@@ -170,6 +181,10 @@ namespace WpfProjekt
                 dalej.IsEnabled = false;
                 dalej.Visibility = Visibility.Hidden;
                 tbTime.Visibility = Visibility.Hidden;
+                if (czasID.IsChecked)
+                {
+                    _timer.Stop();
+                }
             }
             else if (punktyGracz == 3)
             {
@@ -178,6 +193,10 @@ namespace WpfProjekt
                 dalej.IsEnabled = false;
                 dalej.Visibility = Visibility.Hidden;
                 tbTime.Visibility = Visibility.Hidden;
+                if (czasID.IsChecked)
+                {
+                    _timer.Stop();
+                }
             }
         }
 
@@ -234,7 +253,6 @@ namespace WpfProjekt
             dalej.IsEnabled = true;
             czasID.IsChecked = false;
             impo.IsChecked = false;
-            //KOLOR TLA
             calyWidok.Background = Brushes.White;
         }
 
